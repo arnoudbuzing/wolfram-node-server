@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+ <script>
+var ws = new WebSocket('wss://arnoudb3win.wri.wolfram.com:7777', 'echo-protocol');
+function sendMessage() {
+ var message = document.getElementById('message').value;
+ ws.send(message);
+ document.getElementById('form').reset();
+}
+ws.addEventListener("message", function(e) {
+ var msg = e.data;
+ document.getElementById('wolfram-session').innerHTML += msg;
+});
+
+function keyHandler(e) {
+ if(e.keyCode==13) {
+  sendMessage();
+  return false;
+ } else {
+  return true;
+ }
+}
+
+ </script>
+</head>
+<body>
+ <pre>
+  <div id='wolfram-session'></div>
+  <form id='form'>
+  <input type='text' id='message' onkeypress='return keyHandler(event)'></input>
+  </form>
+ </pre>
+</body>
+</html>
+
