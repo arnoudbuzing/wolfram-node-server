@@ -3,8 +3,8 @@ var config = { ssl: true, port: 7777, key: fs.readFileSync('key.pem'), cert: fs.
 var https = require('https');
 var ws = require('ws');
 var wsServer = ws.Server;
-var httpsServer = https.createServer({ key: config.key, cert: config.cert }, function(req, res) { 
- var html = fs.readFileSync('websocket-client.html'); 
+var httpsServer = https.createServer({ key: config.key, cert: config.cert }, function(req, res) {
+ var html = fs.readFileSync('websocket-client.html');
  res.writeHead(200);
  res.end(html);
 });
@@ -14,9 +14,9 @@ var wss = new wsServer({ server: httpsServer });
 
 wss.on('connection', function(socket) {
  console.log((new Date()) + ' Connection accepted.');
- var wolfram = require('child_process').spawn('c:\\Program Files\\Wolfram Research\\Mathematica\\11.1\\wolfram.exe');
+ var wolfram = require('child_process').spawn('c:\\Program Files\\Wolfram Research\\Mathematica\\11.3\\wolfram.exe');
  wolfram.stdout.on('data', function(data) { socket.send(String(data)); });
- socket.on('message', function(message) { 
+ socket.on('message', function(message) {
   socket.send(String(message));
   wolfram.stdin.write(message+'\n');
  });
