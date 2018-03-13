@@ -5,7 +5,7 @@ xSocketServer[{host_,port_}] := Module[ {socket},
   SocketListen[socket,
     Function[{assoc},
       WriteString[$Output,"*"];
-      BinaryWrite[assoc["SourceSocket"], ByteArray@ToCharacterCode[ToString[ToExpression@FromCharacterCode@Normal[assoc["DataByteArray"]]]]]
+      BinaryWrite[assoc["SourceSocket"], ByteArray@ToCharacterCode[ToString[ToExpression@FromCharacterCode@Normal[assoc["DataByteArray"]],InputForm]]]
     ],
     HandlerFunctionsKeys -> {"Socket", "SourceSocket", "DataByteArray"}
   ];
